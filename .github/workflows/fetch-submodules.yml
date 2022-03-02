@@ -1,0 +1,29 @@
+name: Fetch submodule updates
+
+on:
+  schedule:
+    - cron: "21 8 * * *" # run every day at 1:20 AM PST
+  workflow_dispatch:
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set git configurations
+      run: |
+        git config --global user.name "github-actions"
+        git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+    - name: Update submodules
+      run: |
+        git submodule update --init --recursive
+        git submodule update --recursive --remote
+
+    - name: Commit submodule updates
+      run: |
+        git commit -am "pull latest submodule updates" || :
+        git push

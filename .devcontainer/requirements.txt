@@ -1,0 +1,16 @@
+flask
+jupyter
+datascience 	
+numpy 
+pybryt
+pandas 
+scipy 
+folium
+matplotlib 
+ipywidgets
+bqplot 
+nbinteract
+otter-grader 
+scikit-learn
+plotly
+seaborn
