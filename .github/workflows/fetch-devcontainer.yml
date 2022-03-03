@@ -1,4 +1,4 @@
-name: Fetch submodule updates
+name: Fetch devcontainer
 
 on:
   schedule:
@@ -18,12 +18,15 @@ jobs:
         git config --global user.name "github-actions"
         git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-    - name: Update submodules
+    - name: Clone devcontainer repo
+      id: clone-devcontainer
       run: |
-        git submodule update --init --recursive
-        git submodule update --recursive --remote
+        git clone https://github.com/chrispyles/ds-devcontainer .devcontainer
+        echo "::set-output name=devcontainer-sha::$(cd .devcontainer && git rev-parse HEAD)"
+        rm -rf .devcontainer/.git*
 
     - name: Commit submodule updates
       run: |
-        git commit -am "pull latest submodule updates" || :
+        git add .devcontainer
+        git commit -m "update devcontainer to chrispyles/ds-devcontainer@${{ steps.clone-devcontainer.devcontainer-sha }}" || :
         git push
