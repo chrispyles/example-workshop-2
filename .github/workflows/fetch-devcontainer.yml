@@ -24,7 +24,7 @@ jobs:
     - name: Clone devcontainer repo
       id: clone
       run: |
-        rm -rf .devcontainer
+        rm -r .devcontainer
         git clone https://github.com/$DEVCONTAINER_REPO .devcontainer
         echo "::set-output name=sha::$(cd .devcontainer && git rev-parse HEAD)"
         rm -rf .devcontainer/.git*
