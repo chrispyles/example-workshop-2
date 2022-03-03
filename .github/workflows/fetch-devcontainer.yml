@@ -10,6 +10,9 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    env:
+      DEVCONTAINER_REPO: "chrispyles/ds-devcontainer"
+
     steps:
     - uses: actions/checkout@v2
 
@@ -21,12 +24,13 @@ jobs:
     - name: Clone devcontainer repo
       id: clone
       run: |
-        git clone https://github.com/chrispyles/ds-devcontainer .devcontainer
+        rm -rf .devcontainer
+        git clone https://github.com/$DEVCONTAINER_REPO .devcontainer
         echo "::set-output name=sha::$(cd .devcontainer && git rev-parse HEAD)"
         rm -rf .devcontainer/.git*
 
     - name: Commit submodule updates
       run: |
         git add .devcontainer
-        git commit -m "update devcontainer to chrispyles/ds-devcontainer@${{ steps.clone.outputs.sha }}" || :
+        git commit -m "update devcontainer to $DEVCONTAINER_REPO@${{ steps.clone.outputs.sha }}" || :
         git push
