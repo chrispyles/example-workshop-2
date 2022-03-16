@@ -10,9 +10,6 @@ jobs:
 
     runs-on: ubuntu-latest
 
-    env:
-      DEVCONTAINER_REPO: "chrispyles/ds-devcontainer"
-
     steps:
     - uses: actions/checkout@v2
 
